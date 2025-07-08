@@ -16,6 +16,13 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --border-radius: 12px;
             --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --light-gray: #f8f9fa;
+            --dark-gray: #555;
+            --secondary-blue: #2980b9;
+            --primary-blue: #3498db;
+            --accent-green: #2ecc71;
+            --accent-orange: #f39c12;
+            --gold: #f1c40f;
         }
 
         * {
@@ -270,8 +277,8 @@
             border-radius: 10px;
             padding: 20px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            align-items: stretch;
             min-height: 200px;
         }
 
@@ -534,26 +541,26 @@
             <li><a href="../blog.html">Blog</a></li>
             <li><a href="../blog-ai.html">AI Deep Dive</a></li>
             <li><a href="interactive_transformer.html">Interactive Demo</a></li>
-        </ul>
-    </nav>
-    <!-- Navigation -->
-    <nav>
-        <ul>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#step-by-step">Step by Step</a></li>
             <li><a href="#architecture">Architecture</a></li>
-            <li><a href="#impact">Real-World Impact</a></li>
         </ul>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Transformer Deep Dive</h1>
-            <p>Understanding the Architecture that Revolutionized AI</p>
+            <h1>Understanding Transformers</h1>
+            <p>Let's explore together how the architecture that changed AI actually works</p>
             <div class="hero-buttons">
                 <a href="#overview" class="btn">Start Learning</a>
                 <a href="interactive_transformer.html" class="btn secondary">Interactive Demo</a>
+            </div>
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; backdrop-filter: blur(10px);">
+                <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">
+                    All animations created with Python and Manim | 
+                    <a href="https://github.com/SamyakSS83/transformer-animation" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Code Available on GitHub</a>
+                </p>
             </div>
         </div>
     </section>
@@ -562,25 +569,36 @@
         <!-- Overview Section -->
         <section id="overview" class="section">
             <div class="section-header">
-                <h2>What Makes Transformers Special?</h2>
-                <p>Three revolutionary concepts that changed everything</p>
+                <h2>What Makes Transformers So Amazing?</h2>
+                <p>I've created this visual journey to help you understand three game-changing concepts</p>
             </div>
             <div class="section-content">
+                <!-- Overview Video -->
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <video controls style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: var(--shadow);">
+                        <source src="media/videos/720p30/TransformerOverview.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p style="margin-top: 1rem; font-style: italic; color: var(--text-color); opacity: 0.8;">
+                        Watch this animated overview to see transformers in action
+                    </p>
+                </div>
+
                 <div class="visualization-grid">
                     <div class="vis-card">
-                        <span class="icon">→</span>
-                        <h3>Parallel Processing</h3>
-                        <p>Unlike RNNs, transformers process all tokens simultaneously, making training dramatically faster and more efficient.</p>
+                        <span class="icon">⚡</span>
+                        <h3>Parallel Processing Power</h3>
+                        <p>Instead of processing words one by one like traditional models, transformers analyze the entire sentence at once. It's like reading a whole paragraph versus letter by letter!</p>
                     </div>
                     <div class="vis-card">
-                        <span class="icon">●</span>
-                        <h3>Self-Attention</h3>
-                        <p>Every token can directly attend to every other token, capturing complex relationships regardless of distance.</p>
+                        <span class="icon">↗</span>
+                        <h3>Smart Attention Mechanism</h3>
+                        <p>Every word can "look at" and understand its relationship with every other word in the sentence, no matter how far apart they are. Think of it as giving the model a bird's eye view.</p>
                     </div>
                     <div class="vis-card">
-                        <span class="icon">◊</span>
-                        <h3>Multi-Head Attention</h3>
-                        <p>Multiple attention mechanisms work in parallel, each learning different types of relationships and patterns.</p>
+                        <span class="icon">⚡</span>
+                        <h3>Multi-Head Brilliance</h3>
+                        <p>Multiple attention mechanisms work in parallel, each specializing in different types of relationships and patterns. It's like having multiple experts examine the same text!</p>
                     </div>
                 </div>
             </div>
@@ -589,25 +607,25 @@
         <!-- Step by Step Section -->
         <section id="step-by-step" class="section">
             <div class="section-header">
-                <h2>Step-by-Step Breakdown</h2>
-                <p>How transformers process information from input to output</p>
+                <h2>Let's Break It Down Together</h2>
+                <p>I'll walk you through exactly how transformers work, step by step</p>
             </div>
             <div class="section-content">
                 <div class="step-container">
                     <div class="step">
                         <div class="step-text">
-                            <h3>1. Tokenization & Embedding</h3>
-                            <p>Text is broken into tokens and converted into dense vector representations. Each token becomes a point in high-dimensional space where semantic similarity is preserved.</p>
-                            <p><strong>Key Insight:</strong> Similar words have similar embeddings, allowing the model to understand relationships between concepts.</p>
+                            <h3>1. Turning Words into Numbers</h3>
+                            <p>First, we need to convert text into something the computer can understand. Think of it like giving each word a unique ID card, then representing it as a list of numbers that capture its meaning.</p>
+                            <p><strong>The cool part:</strong> Words with similar meanings end up with similar number patterns!</p>
                         </div>
                         <div class="step-visual">
                             <div style="text-align: center;">
-                                <div style="margin-bottom: 15px; font-size: 1.2rem;">"Hello World" → ["Hello", "World"]</div>
+                                <div style="margin-bottom: 15px; font-size: 1.2rem; color: var(--primary-color);">"Hello World" → ["Hello", "World"]</div>
                                 <div style="display: flex; gap: 10px; justify-content: center;">
-                                    <div style="background: var(--primary-blue); color: white; padding: 10px; border-radius: 5px;">
+                                    <div style="background: var(--accent-color); color: white; padding: 10px; border-radius: 5px;">
                                         [0.2, -0.1, 0.8, 0.3]
                                     </div>
-                                    <div style="background: var(--accent-green); color: white; padding: 10px; border-radius: 5px;">
+                                    <div style="background: var(--secondary-color); color: white; padding: 10px; border-radius: 5px;">
                                         [0.7, 0.4, -0.2, 0.9]
                                     </div>
                                 </div>
@@ -617,11 +635,17 @@
 
                     <div class="step">
                         <div class="step-text">
-                            <h3>2. Positional Encoding</h3>
-                            <p>Since transformers process all tokens simultaneously, we need to inject positional information. Sinusoidal encodings provide unique "fingerprints" for each position.</p>
-                            <p><strong>Mathematical Beauty:</strong> The sine and cosine functions create patterns that allow the model to understand relative distances between words.</p>
+                            <h3>2. Adding Position Information</h3>
+                            <p>Here's where it gets clever! Since transformers read all words at once, we need to tell them where each word sits in the sentence. We do this using mathematical patterns called sinusoidal encodings.</p>
+                            <p><strong>Why this works:</strong> These patterns give each position a unique "fingerprint" that never repeats!</p>
                         </div>
                         <div class="step-visual">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <video controls style="max-width: 100%; height: auto; border-radius: 8px;">
+                                    <source src="media/videos/720p30/PositionalEncoding.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                             <div class="formula">
                                 PE<sub>(pos,2i)</sub> = sin(pos/10000<sup>2i/d</sup>)<br><br>
                                 PE<sub>(pos,2i+1)</sub> = cos(pos/10000<sup>2i/d</sup>)
@@ -631,12 +655,12 @@
 
                     <div class="step">
                         <div class="step-text">
-                            <h3>3. Self-Attention Magic</h3>
-                            <p>The heart of the transformer! Each token creates Query, Key, and Value vectors. The attention mechanism determines how much each token should focus on every other token.</p>
-                            <p><strong>Real Impact:</strong> This allows "bank" to attend to "river" in "river bank" vs "money" in "bank account".</p>
+                            <h3>3. The Magic of Self-Attention</h3>
+                            <p>This is where transformers really shine! Each word asks: "Which other words should I pay attention to?" The model learns these relationships automatically.</p>
+                            <p><strong>Real example:</strong> In "The bank by the river," the word "bank" learns to look at "river" (not money!)</p>
                         </div>
                         <div class="step-visual">
-                            <div class="formula">
+                            <div class="formula" style="margin-bottom: 1.5rem;">
                                 Attention(Q,K,V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V
                             </div>
                             <div class="attention-matrix-demo">
@@ -675,23 +699,29 @@
 
                     <div class="step">
                         <div class="step-text">
-                            <h3>4. Multi-Head Attention</h3>
-                            <p>Instead of one attention mechanism, transformers use multiple "heads" in parallel. Each head specializes in different types of relationships - syntax, semantics, long-range dependencies.</p>
-                            <p><strong>Think of it as:</strong> Having multiple experts examine the same sentence, each with their own specialty and perspective.</p>
+                            <h3>4. Multiple Attention Heads Working Together</h3>
+                            <p>Instead of just one attention mechanism, transformers use many in parallel. Each "head" becomes an expert in different types of relationships - like having a team of specialists!</p>
+                            <p><strong>Imagine:</strong> One head focuses on grammar, another on meaning, and another on long-range connections.</p>
                         </div>
                         <div class="step-visual">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <video controls style="max-width: 100%; height: auto; border-radius: 8px;">
+                                    <source src="media/videos/720p30/MultiHeadAttention.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                                <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                                    <strong>Head 1</strong><br>Syntax Focus
+                                <div style="background: var(--highlight-color); color: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                    <strong>Head 1</strong><br>Grammar Expert
                                 </div>
-                                <div style="background: var(--accent-green); color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                                    <strong>Head 2</strong><br>Semantics Focus
+                                <div style="background: var(--secondary-color); color: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                    <strong>Head 2</strong><br>Meaning Expert
                                 </div>
-                                <div style="background: var(--accent-orange); color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                                    <strong>Head 3</strong><br>Long-range Focus
+                                <div style="background: #f39c12; color: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                    <strong>Head 3</strong><br>Context Expert
                                 </div>
-                                <div style="background: var(--accent-purple); color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                                    <strong>Head 4</strong><br>Context Focus
+                                <div style="background: #9b59b6; color: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                    <strong>Head 4</strong><br>Relationship Expert
                                 </div>
                             </div>
                         </div>
@@ -703,89 +733,83 @@
         <!-- Architecture Flow -->
         <section id="architecture" class="section">
             <div class="section-header">
-                <h2>Complete Architecture</h2>
-                <p>The full transformer pipeline from input to output</p>
+                <h2>Putting It All Together</h2>
+                <p>Here's how all the pieces work together in the complete transformer</p>
             </div>
             <div class="section-content">
+                <!-- Complete Architecture Video -->
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <video controls style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: var(--shadow);">
+                        <source src="media/videos/720p30/CompleteTransformerArchitecture.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p style="margin-top: 1rem; font-style: italic; color: var(--text-color); opacity: 0.8;">
+                        Watch the complete transformer architecture in action - from input to output
+                    </p>
+                </div>
+
                 <div class="architecture-flow">
                     <div class="flow-step">
                         <h3>Input</h3>
-                        <p>Tokenization + Embeddings + Positional Encoding</p>
+                        <p>Your text gets tokenized, embedded, and position-encoded</p>
                     </div>
                     <div class="flow-step">
                         <h3>Encoder</h3>
-                        <p>Multi-Head Self-Attention + Feed Forward</p>
+                        <p>Multiple layers of self-attention and feed-forward networks</p>
                     </div>
                     <div class="flow-step">
                         <h3>Decoder</h3>
-                        <p>Masked Attention + Cross-Attention + Feed Forward</p>
+                        <p>Masked attention, cross-attention, and feed-forward processing</p>
                     </div>
                     <div class="flow-step">
                         <h3>Output</h3>
-                        <p>Linear Layer + Softmax</p>
+                        <p>Linear transformation and softmax for final predictions</p>
                     </div>
                 </div>
 
                 <div class="interactive-demo">
-                    <h3 style="text-align: center; margin-bottom: 20px;">Interactive Components</h3>
+                    <h3 style="text-align: center; margin-bottom: 20px;">Explore the Components</h3>
                     <div class="demo-controls">
                         <button class="demo-btn active" onclick="showDemo('attention')">Attention Weights</button>
                         <button class="demo-btn" onclick="showDemo('encoding')">Positional Encoding</button>
                         <button class="demo-btn" onclick="showDemo('layers')">Layer Stack</button>
                     </div>
                     <div class="demo-content" id="demoContent">
-                        <p>Click the buttons above to explore different components of the transformer architecture!</p>
+                        <p>Click the buttons above to explore different aspects of the transformer!</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Real-World Impact -->
-        <section id="impact" class="section">
-            <div class="section-header">
-                <h2>Real-World Impact</h2>
-                <p>How transformers changed everything</p>
-            </div>
-            <div class="section-content">
-                <div class="visualization-grid">
-                    <div class="vis-card">
-                        <span class="icon">AI</span>
-                        <h3>Language Models</h3>
-                        <p>GPT, BERT, T5, and thousands of other models are all based on transformer architecture.</p>
-                    </div>
-                    <div class="vis-card">
-                        <span class="icon">○</span>
-                        <h3>Computer Vision</h3>
-                        <p>Vision Transformers (ViTs) are competing with CNNs for image classification and object detection.</p>
-                    </div>
-                    <div class="vis-card">
-                        <span class="icon">🎵</span>
-                        <h3>Multi-Modal AI</h3>
-                        <p>CLIP, DALL-E, and other models combine text and images using transformer architectures.</p>
-                    </div>
-                    <div class="vis-card">
-                        <span class="icon">🧬</span>
-                        <h3>Scientific Discovery</h3>
-                        <p>Protein folding, drug discovery, and climate modeling all benefit from transformer-based models.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+                    <!-- <div class="vis-card">
+                        <span class="icon">�</span>
+                        <h3>Creative AI</h3>
+                        <p>DALL-E, Midjourney, and other image generators use transformer-based models to understand text descriptions and create stunning visuals.</p>
+                    </div> -->
+
+
 
         <!-- Source Section -->
         <section class="source-section">
-            <h2>Learn More</h2>
-            <p>For those interested in the detailed workings and mathematics behind transformers, here are some excellent resources:</p>
+            <h2>Want to Explore Further?</h2>
+            <p>I've created all the code and animations for this visualization using Python and Manim. Everything is open source and available for you to explore, modify, and learn from!</p>
             <div class="source-links">
-                <a href="https://arxiv.org/abs/1706.03762" class="source-link" target="_blank">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/arxiv.png" alt="arxiv" style="width: 24px; height: 24px;"/> Arxiv Paper
+                <a href="https://github.com/SamyakSS83/transformer-animation" class="source-link" target="_blank">
+                    View Source Code
                 </a>
-                <a href="https://jalammar.github.io/illustrated-transformer/" class="source-link" target="_blank">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/diagram.png" alt="diagram" style="width: 24px; height: 24px;"/> Illustrated Guide
+                <a href="interactive_transformer.html" class="source-link">
+                    Interactive Demo
                 </a>
-                <a href="https://www.youtube.com/watch?v=4Bdc55jK1EY" class="source-link" target="_blank">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="youtube" style="width: 24px; height: 24px;"/> Video Explanation
+                <a href="../blog-ai.html" class="source-link">
+                    Mathematical Deep Dive
                 </a>
+            </div>
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(26, 188, 156, 0.1); border-radius: 12px; border-left: 4px solid var(--secondary-color);">
+                <p style="margin: 0; font-size: 1rem; color: var(--text-color);">
+                    <strong>Created by Samyak</strong><br>
+                    All animations generated using Manim (Mathematical Animation Engine). 
+                    The goal is to make complex AI concepts accessible and visually engaging for everyone.
+                </p>
             </div>
         </section>
     </div>
@@ -793,23 +817,24 @@
     <!-- Footer -->
     <footer style="background: var(--primary-color); color: white; padding: 2rem 0; margin-top: 3rem;">
         <div style="max-width: 1200px; margin: 0 auto; text-align: center; padding: 0 2rem;">
-            <h3 style="margin-bottom: 1rem;">Explore More</h3>
+            <h3 style="margin-bottom: 1rem;">Continue Your AI Journey</h3>
             <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
                 <a href="interactive_transformer.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Interactive Demo</a>
-                <a href="../blog-ai.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Mathematical Explanation</a>
+                <a href="../blog-ai.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Mathematical Analysis</a>
                 <a href="../tinkering.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">My Projects</a>
                 <a href="../index.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Home</a>
             </div>
-            <p style="opacity: 0.8; font-size: 0.9rem;">© 2025 Samyak Sanghvi. Making AI accessible, one explanation at a time.</p>
+            <p style="opacity: 0.8; font-size: 0.9rem;">© 2025 Samyak Sanghvi. Passionate about making AI accessible and understandable.</p>
         </div>
     </footer>
 
     <!-- Navigation Footer -->
-    <div class="nav-footer">
-        <p>Explore More:</p>
-        <a href="../index.html">← Back to Home</a>
-        <a href="../blog-ai.html">AI Blog Post</a>
-        <a href="interactive_transformer.html">Interactive Demo →</a>
+    <div style="background: var(--secondary-color); color: white; padding: 1.5rem 0; text-align: center;">
+        <p style="margin: 0; font-size: 1rem;">
+            <a href="../index.html" style="color: white; text-decoration: none; margin: 0 1rem;">← Home</a>
+            <a href="../blog-ai.html" style="color: white; text-decoration: none; margin: 0 1rem;">Mathematical Deep Dive</a>
+            <a href="interactive_transformer.html" style="color: white; text-decoration: none; margin: 0 1rem;">Interactive Demo →</a>
+        </p>
     </div>
 
     <script>
@@ -826,35 +851,44 @@
             switch(type) {
                 case 'attention':
                     content.innerHTML = `
-                        <h4>Attention Weight Visualization</h4>
-                        <p>Each number shows how much one word attends to another. Higher values (redder colors) indicate stronger attention.</p>
-                        <div style="margin-top: 20px;">
-                            <div>🔴 High Attention (0.7-1.0) - Strong relationship</div>
-                            <div>🟡 Medium Attention (0.3-0.7) - Moderate relationship</div>
-                            <div>🔵 Low Attention (0.0-0.3) - Weak relationship</div>
+                        <h4>Understanding Attention Weights</h4>
+                        <p>Think of attention weights as "how much should I care about this word?" Each number tells us the strength of connection between words.</p>
+                        <div style="margin-top: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <div style="margin: 5px 0;">🔴 Strong Attention (0.7-1.0) - "These words are very related!"</div>
+                            <div style="margin: 5px 0;">🟡 Medium Attention (0.3-0.7) - "There's some connection here"</div>
+                            <div style="margin: 5px 0;">🔵 Weak Attention (0.0-0.3) - "Not much relationship"</div>
                         </div>
+                        <p style="margin-top: 15px; font-style: italic;">The beauty is that the model learns these relationships automatically from data!</p>
                     `;
                     break;
                 case 'encoding':
                     content.innerHTML = `
-                        <h4>Positional Encoding Patterns</h4>
-                        <p>Sine and cosine waves at different frequencies create unique position signatures.</p>
+                        <h4>Position Encoding Magic</h4>
+                        <p>Since transformers read all words at once, we need to tell them "this word comes first, this comes second..." Position encoding does exactly that!</p>
                         <div style="margin-top: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                            <strong>Position 0:</strong> [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]<br>
-                            <strong>Position 1:</strong> [0.84, 0.54, 0.1, 0.99, 0.01, 1.0]<br>
-                            <strong>Position 2:</strong> [0.91, -0.42, 0.2, 0.98, 0.02, 1.0]
+                            <strong>Position 0:</strong> [0.0, 1.0, 0.0, 1.0, 0.0, 1.0] ← First word<br>
+                            <strong>Position 1:</strong> [0.84, 0.54, 0.1, 0.99, 0.01, 1.0] ← Second word<br>
+                            <strong>Position 2:</strong> [0.91, -0.42, 0.2, 0.98, 0.02, 1.0] ← Third word
                         </div>
+                        <p style="margin-top: 15px; font-style: italic;">Each position gets a unique mathematical "fingerprint" that never repeats!</p>
                     `;
                     break;
                 case 'layers':
                     content.innerHTML = `
-                        <h4>Transformer Layer Stack</h4>
-                        <p>Each layer builds upon the previous one, creating increasingly complex representations.</p>
+                        <h4>How Layers Build Understanding</h4>
+                        <p>Transformers are like students learning step by step. Each layer builds more sophisticated understanding!</p>
                         <div style="margin-top: 20px;">
-                            <div style="background: #e3f2fd; padding: 10px; margin: 5px 0; border-radius: 5px;">Layer 1: Basic word relationships</div>
-                            <div style="background: #f3e5f5; padding: 10px; margin: 5px 0; border-radius: 5px;">Layer 6: Syntactic structures</div>
-                            <div style="background: #e8f5e8; padding: 10px; margin: 5px 0; border-radius: 5px;">Layer 12: Abstract concepts</div>
+                            <div style="background: #e3f2fd; padding: 15px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+                                <strong>Early Layers:</strong> "I see words like 'the', 'cat', 'sat'"
+                            </div>
+                            <div style="background: #f3e5f5; padding: 15px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #9c27b0;">
+                                <strong>Middle Layers:</strong> "I understand 'the cat' is a noun phrase"
+                            </div>
+                            <div style="background: #e8f5e8; padding: 15px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #4caf50;">
+                                <strong>Deep Layers:</strong> "I comprehend the entire meaning and context"
+                            </div>
                         </div>
+                        <p style="margin-top: 15px; font-style: italic;">It's like going from recognizing letters to understanding poetry!</p>
                     `;
                     break;
             }

@@ -16,6 +16,12 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --border-radius: 12px;
             --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --accent-purple: #9b59b6;
+            --accent-red: #e74c3c;
+            --accent-green: #2ecc71;
+            --accent-orange: #f39c12;
+            --primary-blue: #3498db;
+            --secondary-blue: #2980b9;
         }
 
         * {
@@ -332,21 +338,18 @@
         }
 
         .data-flow {
-            position: absolute;
-            top: 50%;
-            right: -20px;
-            width: 40px;
-            height: 3px;
-            background: var(--accent-orange);
-            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            font-size: 2rem;
+            color: var(--accent-orange);
+            position: relative;
         }
 
-        .data-flow::after {
+        .data-flow::before {
             content: '→';
-            position: absolute;
-            right: -15px;
-            top: -10px;
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--accent-orange);
         }
 
@@ -512,13 +515,24 @@
 
     <div class="container">
         <div class="header">
-            <h1>Transformer Architecture</h1>
-            <p>Interactive Visualization of "Attention is All You Need"</p>
+            <h1>Hands-On Transformer Experience</h1>
+            <p>Play with the components and see how transformers process language in real-time!</p>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(26, 188, 156, 0.1); border-radius: 8px;">
+                <p style="margin: 0; font-size: 0.9rem;">
+                    Interactive version of the transformer architecture | 
+                    <a href="https://github.com/SamyakSS83/transformer-animation" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">View Source</a>
+                </p>
+            </div>
         </div>
 
         <!-- Tokenization Section -->
         <div class="visualization-container" id="tokenization">
             <h2 class="section-title">1. Tokenization</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-color); line-height: 1.6;">
+                Before any processing can begin, we need to break down the input text into individual tokens. 
+                This could be words, subwords, or even characters depending on the tokenization strategy. 
+                Each token becomes a discrete unit that the transformer can process.
+            </p>
             <div class="tokenization-demo">
                 <div class="input-sentence" id="inputSentence">
                     "The transformer revolutionized natural language processing"
@@ -537,6 +551,11 @@
         <!-- Embedding Section -->
         <div class="visualization-container" id="embedding">
             <h2 class="section-title">2. Word Embeddings</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-color); line-height: 1.6;">
+                Each word token is converted into a dense numerical vector that captures its semantic meaning. 
+                Words with similar meanings will have similar vector representations, allowing the model to understand 
+                relationships and context between words mathematically.
+            </p>
             <div class="embedding-demo">
                 <div class="embedding-vector">
                     <div style="font-weight: bold;">The</div>
@@ -571,6 +590,11 @@
         <!-- Attention Mechanism -->
         <div class="visualization-container" id="attention">
             <h2 class="section-title">3. Self-Attention Mechanism</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-color); line-height: 1.6;">
+                The self-attention mechanism allows each word to "look at" every other word in the sequence and determine 
+                how much attention to pay to each one. The attention weights in the matrix below show these relationships - 
+                darker colors indicate stronger connections between words.
+            </p>
             <div class="formula-container">
                 <div class="formula">Attention(Q, K, V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V</div>
                 <div class="formula-explanation">
@@ -595,6 +619,11 @@
         <!-- Multi-Head Attention -->
         <div class="visualization-container" id="multihead">
             <h2 class="section-title">4. Multi-Head Attention</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-color); line-height: 1.6;">
+                Instead of using just one attention mechanism, transformers run multiple attention heads in parallel. 
+                Each head learns to focus on different aspects of the relationships between words - like having multiple 
+                experts each specializing in different types of linguistic patterns.
+            </p>
             <div class="multihead-demo">
                 <div class="attention-head">
                     <div class="head-title">Head 1: Syntax</div>
@@ -621,7 +650,7 @@
                         <div class="mini-cell" style="background: rgba(255,255,255,0.6);"></div>
                         <div class="mini-cell" style="background: rgba(255,255,255,0.9);"></div>
                         <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
-                        class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
                     </div>
                 </div>
                 <div class="attention-head">
@@ -658,6 +687,11 @@
         <!-- Architecture Overview -->
         <div class="visualization-container" id="architecture">
             <h2 class="section-title">5. Complete Architecture</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-color); line-height: 1.6;">
+                The transformer architecture consists of an encoder-decoder structure. The encoder processes the input 
+                sequence and creates rich representations, while the decoder generates the output sequence one token at a time. 
+                Each component includes residual connections and layer normalization for stable training.
+            </p>
             <div class="architecture-overview">
                 <div class="encoder">
                     <div class="encoder-title">ENCODER</div>
@@ -667,8 +701,9 @@
                     <div class="component">Add & Norm</div>
                     <div class="component">Feed Forward Network</div>
                     <div class="component">Add & Norm</div>
-                    <div class="data-flow"></div>
                 </div>
+                
+                <div class="data-flow"></div>
                 
                 <div class="decoder">
                     <div class="decoder-title">DECODER</div>
