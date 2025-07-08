@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/2016333726_361760742_223132457.mp4'
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/543634251_2682551205_621544350.mp4'
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/543634251_2380778929_1505148195.mp4'
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/543634251_4217992463_3458899903.mp4'
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/543634251_976804275_2993611903.mp4'
+file 'file:/home/threesamyak/aboutme/transformer/media/videos/720p30/partial_movie_files/CompleteTransformerArchitectureScene/543634251_2844360058_274631804.mp4'

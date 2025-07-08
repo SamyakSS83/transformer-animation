@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Transformer Architecture</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --accent-color: #3498db;
+            --highlight-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e8f5f1 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--highlight-color));
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .visualization-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualization-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--highlight-color));
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        /* Tokenization Animation */
+        .tokenization-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .input-sentence {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            background: var(--light-bg);
+            border-radius: 10px;
+            transition: all 0.5s ease;
+        }
+
+        .token-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .token {
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        .token:nth-child(1) { animation-delay: 0.1s; }
+        .token:nth-child(2) { animation-delay: 0.2s; }
+        .token:nth-child(3) { animation-delay: 0.3s; }
+        .token:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Embedding Visualization */
+        .embedding-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .embedding-vector {
+            background: var(--accent-green);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .vector-values {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .vector-value {
+            background: rgba(255,255,255,0.2);
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* Attention Mechanism */
+        .attention-demo {
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        .attention-matrix {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .attention-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .attention-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .word-labels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .word-label {
+            font-weight: bold;
+            color: var(--secondary-blue);
+            padding: 10px 5px;
+        }
+
+        /* Multi-head Attention */
+        .multihead-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .attention-head {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-red));
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: scaleIn 0.6s ease forwards;
+        }
+
+        .attention-head:nth-child(1) { animation-delay: 0.1s; }
+        .attention-head:nth-child(2) { animation-delay: 0.2s; }
+        .attention-head:nth-child(3) { animation-delay: 0.3s; }
+        .attention-head:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .head-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .mini-attention {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .mini-cell {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+
+        /* Architecture Overview */
+        .architecture-overview {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .encoder, .decoder {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .encoder-title, .decoder-title {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .component {
+            background: rgba(255,255,255,0.2);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .component:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .data-flow {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            width: 40px;
+            height: 3px;
+            background: var(--accent-orange);
+            border-radius: 2px;
+        }
+
+        .data-flow::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: -10px;
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+        }
+
+        /* Interactive Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .control-btn.active {
+            background: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+        }
+
+        /* Formula Display */
+        .formula-container {
+            background: var(--light-gray);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            margin: 20px 0;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .formula-explanation {
+            color: var(--dark-gray);
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .multihead-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .architecture-overview {
+                flex-direction: column;
+            }
+            
+            .encoder, .decoder {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .data-flow {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .multihead-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .attention-matrix {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../tinkering.html">Tinkering</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+            <li><a href="../blog-ai.html">AI Deep Dive</a></li>
+            <li><a href="index.html">Transformer Deep Dive</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Transformer Architecture</h1>
+            <p>Interactive Visualization of "Attention is All You Need"</p>
+        </div>
+
+        <!-- Tokenization Section -->
+        <div class="visualization-container" id="tokenization">
+            <h2 class="section-title">1. Tokenization</h2>
+            <div class="tokenization-demo">
+                <div class="input-sentence" id="inputSentence">
+                    "The transformer revolutionized natural language processing"
+                </div>
+                <div class="token-container" id="tokenContainer">
+                    <div class="token">The</div>
+                    <div class="token">transformer</div>
+                    <div class="token">revolutionized</div>
+                    <div class="token">natural</div>
+                    <div class="token">language</div>
+                    <div class="token">processing</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Embedding Section -->
+        <div class="visualization-container" id="embedding">
+            <h2 class="section-title">2. Word Embeddings</h2>
+            <div class="embedding-demo">
+                <div class="embedding-vector">
+                    <div style="font-weight: bold;">The</div>
+                    <div class="vector-values">
+                        <div class="vector-value">0.23</div>
+                        <div class="vector-value">-0.15</div>
+                        <div class="vector-value">0.67</div>
+                        <div class="vector-value">0.42</div>
+                    </div>
+                </div>
+                <div class="embedding-vector">
+                    <div style="font-weight: bold;">transformer</div>
+                    <div class="vector-values">
+                        <div class="vector-value">0.89</div>
+                        <div class="vector-value">0.34</div>
+                        <div class="vector-value">-0.21</div>
+                        <div class="vector-value">0.76</div>
+                    </div>
+                </div>
+                <div class="embedding-vector">
+                    <div style="font-weight: bold;">revolutionized</div>
+                    <div class="vector-values">
+                        <div class="vector-value">0.45</div>
+                        <div class="vector-value">0.78</div>
+                        <div class="vector-value">-0.33</div>
+                        <div class="vector-value">0.92</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attention Mechanism -->
+        <div class="visualization-container" id="attention">
+            <h2 class="section-title">3. Self-Attention Mechanism</h2>
+            <div class="formula-container">
+                <div class="formula">Attention(Q, K, V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V</div>
+                <div class="formula-explanation">
+                    Where Q (Query), K (Key), and V (Value) are learned linear transformations of the input
+                </div>
+            </div>
+            
+            <div class="attention-demo">
+                <div class="word-labels">
+                    <div class="word-label">The</div>
+                    <div class="word-label">cat</div>
+                    <div class="word-label">sat</div>
+                    <div class="word-label">on</div>
+                    <div class="word-label">mat</div>
+                </div>
+                <div class="attention-matrix" id="attentionMatrix">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Head Attention -->
+        <div class="visualization-container" id="multihead">
+            <h2 class="section-title">4. Multi-Head Attention</h2>
+            <div class="multihead-demo">
+                <div class="attention-head">
+                    <div class="head-title">Head 1: Syntax</div>
+                    <div class="mini-attention">
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.8);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.4);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.9);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.6);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.5);"></div>
+                    </div>
+                </div>
+                <div class="attention-head">
+                    <div class="head-title">Head 2: Semantics</div>
+                    <div class="mini-attention">
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.8);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.7);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.4);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.6);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.9);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
+                        class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
+                    </div>
+                </div>
+                <div class="attention-head">
+                    <div class="head-title">Head 3: Long-range</div>
+                    <div class="mini-attention">
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.5);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.8);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.7);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.4);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.9);"></div>
+                    </div>
+                </div>
+                <div class="attention-head">
+                    <div class="head-title">Head 4: Context</div>
+                    <div class="mini-attention">
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.6);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.4);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.8);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.1);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.3);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.7);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.2);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.9);"></div>
+                        <div class="mini-cell" style="background: rgba(255,255,255,0.5);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Overview -->
+        <div class="visualization-container" id="architecture">
+            <h2 class="section-title">5. Complete Architecture</h2>
+            <div class="architecture-overview">
+                <div class="encoder">
+                    <div class="encoder-title">ENCODER</div>
+                    <div class="component">Input Embedding</div>
+                    <div class="component">+ Positional Encoding</div>
+                    <div class="component">Multi-Head Self-Attention</div>
+                    <div class="component">Add & Norm</div>
+                    <div class="component">Feed Forward Network</div>
+                    <div class="component">Add & Norm</div>
+                    <div class="data-flow"></div>
+                </div>
+                
+                <div class="decoder">
+                    <div class="decoder-title">DECODER</div>
+                    <div class="component">Output Embedding</div>
+                    <div class="component">+ Positional Encoding</div>
+                    <div class="component">Masked Self-Attention</div>
+                    <div class="component">Add & Norm</div>
+                    <div class="component">Cross-Attention</div>
+                    <div class="component">Add & Norm</div>
+                    <div class="component">Feed Forward Network</div>
+                    <div class="component">Add & Norm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Controls -->
+        <div class="controls">
+            <button class="control-btn active" onclick="showSection('tokenization')">Tokenization</button>
+            <button class="control-btn" onclick="showSection('embedding')">Embeddings</button>
+            <button class="control-btn" onclick="showSection('attention')">Attention</button>
+            <button class="control-btn" onclick="showSection('multihead')">Multi-Head</button>
+            <button class="control-btn" onclick="showSection('architecture')">Architecture</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-color); color: white; padding: 2rem 0; margin-top: 3rem;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center; padding: 0 2rem;">
+            <h3 style="margin-bottom: 1rem;">Explore More</h3>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Transformer Deep Dive</a>
+                <a href="../blog-ai.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Mathematical Explanation</a>
+                <a href="../tinkering.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">My Projects</a>
+                <a href="../index.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Home</a>
+            </div>
+            <p style="opacity: 0.8; font-size: 0.9rem;">© 2025 Samyak Sanghvi. Making AI accessible, one explanation at a time.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Attention matrix data
+        const attentionData = [
+            [0.1, 0.2, 0.3, 0.1, 0.3],
+            [0.2, 0.6, 0.1, 0.05, 0.05],
+            [0.1, 0.4, 0.3, 0.1, 0.1],
+            [0.05, 0.1, 0.2, 0.5, 0.15],
+            [0.2, 0.1, 0.1, 0.2, 0.4]
+        ];
+
+        // Populate attention matrix
+        function createAttentionMatrix() {
+            const matrix = document.getElementById('attentionMatrix');
+            matrix.innerHTML = '';
+            
+            attentionData.forEach((row, i) => {
+                row.forEach((value, j) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'attention-cell';
+                    cell.textContent = value.toFixed(2);
+                    
+                    // Color based on attention weight
+                    const intensity = value;
+                    const red = Math.floor(255 * intensity);
+                    const blue = Math.floor(255 * (1 - intensity));
+                    cell.style.backgroundColor = `rgb(${red}, 50, ${blue})`;
+                    
+                    // Add hover effect
+                    cell.addEventListener('mouseenter', () => {
+                        cell.style.transform = 'scale(1.2)';
+                        cell.style.zIndex = '10';
+                        cell.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+                    });
+                    
+                    cell.addEventListener('mouseleave', () => {
+                        cell.style.transform = 'scale(1)';
+                        cell.style.zIndex = '1';
+                        cell.style.boxShadow = 'none';
+                    });
+                    
+                    matrix.appendChild(cell);
+                });
+            });
+        }
+
+        // Section navigation
+        function showSection(sectionName) {
+            // Update active button
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroll to section (simplified)
+            const sectionMap = {
+                'tokenization': 0,
+                'embedding': 1,
+                'attention': 2,
+                'multihead': 3,
+                'architecture': 4
+            };
+            
+            const containers = document.querySelectorAll('.visualization-container');
+            if (containers[sectionMap[sectionName]]) {
+                containers[sectionMap[sectionName]].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        // Animate tokens on page load
+        function animateTokens() {
+            const tokens = document.querySelectorAll('.token');
+            tokens.forEach((token, index) => {
+                setTimeout(() => {
+                    token.style.animation = 'slideInUp 0.6s ease forwards';
+                }, index * 100);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createAttentionMatrix();
+            animateTokens();
+            
+            // Add some interactive effects
+            document.querySelectorAll('.component').forEach(component => {
+                component.addEventListener('click', () => {
+                    component.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                    setTimeout(() => {
+                        component.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                    }, 200);
+                });
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                const activeBtn = document.querySelector('.control-btn.active');
+                const nextBtn = activeBtn.nextElementSibling;
+                if (nextBtn) {
+                    nextBtn.click();
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                const activeBtn = document.querySelector('.control-btn.active');
+                const prevBtn = activeBtn.previousElementSibling;
+                if (prevBtn) {
+                    prevBtn.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
