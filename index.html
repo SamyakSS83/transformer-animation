@@ -43,35 +43,44 @@
         /* Navigation */
         nav {
             background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
-            padding: 1.5rem 0;
+            padding: 0.8rem 0;
             box-shadow: var(--shadow);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         nav ul {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            align-items: center;
+            gap: 1.5rem;
             list-style: none;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
         }
 
         nav a {
             color: #ecf0f1;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            white-space: nowrap;
+            border: 1px solid transparent;
         }
 
         nav a::before {
@@ -87,12 +96,25 @@
 
         nav a:hover {
             color: var(--secondary-color);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(26, 188, 156, 0.15);
+            border: 1px solid rgba(26, 188, 156, 0.3);
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.2);
         }
 
         nav a:hover::before {
             left: 100%;
+        }
+
+        /* Active nav link styling */
+        nav a.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        nav a.active:hover {
+            background: #239b8a;
+            color: white;
         }
 
         .hero {
@@ -503,6 +525,35 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 0.7rem 0;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav ul {
+                gap: 0.8rem;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            
+            nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -554,7 +605,7 @@
             <p>Let's explore together how the architecture that changed AI actually works</p>
             <div class="hero-buttons">
                 <a href="#overview" class="btn">Start Learning</a>
-                <a href="interactive_transformer.html" class="btn secondary">Interactive Demo</a>
+                <a href="interactive_transformer.html" class="btn">Interactive Demo</a>
             </div>
             <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; backdrop-filter: blur(10px);">
                 <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">
